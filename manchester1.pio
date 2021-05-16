@@ -1,0 +1,13 @@
+.program manchester
+
+/*
+    ouputs incomming data manchester encoded
+    does not return to 0 after having cleared the buffer. this 
+    should be done by the system
+    however that can be done by the mail
+*/
+loop:
+    out x, 1
+    MOV pins, x
+    MOV x, ~x
+    MOV pins, x
