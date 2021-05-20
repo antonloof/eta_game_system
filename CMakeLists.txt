@@ -20,7 +20,7 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(pico_test pico_test.c )
-pico_generate_pio_header(pico_test ${CMAKE_CURRENT_LIST_DIR}/hello.pio)
+pico_generate_pio_header(pico_test ${CMAKE_CURRENT_LIST_DIR}/manchester2.pio)
 
 pico_set_program_name(pico_test "pico_test")
 pico_set_program_version(pico_test "0.1")

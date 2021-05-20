@@ -1,18 +1,29 @@
-.program machester2
+.program manchester2
 /*
-    use pio_sm_exec and pio_encode_set(pio_pins, 0); 
-    to reset if some delay is needed after the dma is done.
-
     first 5 bits are how many bits exist in word
     reset is the ones and zeros to send, timing not ok yet
 */
 .wrap_target
+start:
     out x, 5
+    jmp x-- loop
+
+zeroitout:
+    set pins, 0 
+    out x, 27
+
+keep_waiting:
+    jmp x-- keep_waiting [31]
+    jmp start
+
 loop:
     out y, 1
-    mov pins, y
+    mov pins, y [5]
     mov y, !y
     mov pins, y
-    jmp x-- loop
+    jmp x-- landing
     out null, 32 ; discard remaining content of osr
+    jmp start
+landing:
+    jmp loop [3]
 .wrap
