@@ -1,9 +1,9 @@
-.program manchester2
+.program manchester
 /*
-    first 5 bits are how many bits exist in word
-    reset is the ones and zeros to send, timing not ok yet
+    first 5 bits are how many bits exist in word the rest is data
+    if first 5 bits are 0 then rest is delay. the output will be 0 during delay
 */
-.wrap_target
+
 start:
     out x, 5
     jmp x-- loop
@@ -26,4 +26,3 @@ loop:
     jmp start
 landing:
     jmp loop [3]
-.wrap
