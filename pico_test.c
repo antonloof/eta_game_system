@@ -21,7 +21,7 @@
 #define DATA_HEADER_PULSE 0b1111111111111110010
 #define DATA_HEADER_PULSE_LEN 19
 
-#define PIXEL_COUNT 3
+#define PIXEL_COUNT 255
 #define DMA_COUNT (PIXEL_COUNT + 5)
 #define PIXEL_OFFSET 3
 
@@ -55,16 +55,15 @@ int main()
     init_dma();
     init_dma_buf();
     dma_irq0_handler(); // kick it off, legooo
-
-    uint i = 0;
+    uint col = 0;
     while (1)
     {
-        set_rgb(i, 0xFF, 0, 0xFF);
-        sleep_ms(500);
-        set_rgb(i, 0, 0, 0);
-        i++;
-        if (i == 3)
-            i = 0;
+        sleep_ms(10);
+        col++;
+        for (uint i = 0; i < PIXEL_COUNT; i++)
+        {
+            set_rgb(i, col, 0, col);
+        }
     }
     return 0;
 }
@@ -83,7 +82,7 @@ void init_dma_buf()
     dma_buf[1].rg = get_word(SYNC_PULSE_1, SYNC_PULSE_1_LEN);
     dma_buf[1].b = get_word(SYNC_PULSE_2, SYNC_PULSE_2_LEN);
 
-    dma_buf[2].rg = 300;
+    dma_buf[2].rg = 100 * PIXEL_COUNT;
     dma_buf[2].b = get_word(DATA_HEADER_PULSE, DATA_HEADER_PULSE_LEN);
 
     dma_buf[DMA_COUNT - 2].rg = 30;
@@ -119,7 +118,7 @@ uint init_pio(PIO pio, uint pin)
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
     sm_config_set_out_shift(&conf, false, true, 32);
 
-    sm_config_set_clkdiv(&conf, 4); // runs comunication at 1 Mhz (ish)
+    sm_config_set_clkdiv(&conf, 3); // runs comunication at 1 Mhz (ish)
     sm_config_set_set_pins(&conf, pin, 1);
 
     pio_sm_init(pio, sm, offset, &conf);
