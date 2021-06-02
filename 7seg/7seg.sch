@@ -328,19 +328,17 @@ Wire Wire Line
 	5300 2400 5400 2400
 Text GLabel 5350 2400 1    50   Input ~ 0
 g
-Text GLabel 6000 2400 0    50   Input ~ 0
-a
-Text GLabel 6000 2500 0    50   Input ~ 0
+Text GLabel 6700 2550 2    50   Input ~ 0
 b
-Text GLabel 6000 2600 0    50   Input ~ 0
+Text GLabel 6700 2650 2    50   Input ~ 0
 c
-Text GLabel 6000 2800 0    50   Input ~ 0
+Text GLabel 6700 2850 2    50   Input ~ 0
 e
-Text GLabel 6000 2900 0    50   Input ~ 0
+Text GLabel 6700 2950 2    50   Input ~ 0
 f
-Text GLabel 6000 3000 0    50   Input ~ 0
+Text GLabel 6700 3050 2    50   Input ~ 0
 g
-Text GLabel 6000 2700 0    50   Input ~ 0
+Text GLabel 6700 2750 2    50   Input ~ 0
 d
 Wire Wire Line
 	2900 3600 3000 3600
@@ -383,49 +381,13 @@ Wire Wire Line
 $Comp
 L Connector_Generic:Conn_01x07 J3
 U 1 1 60BD2848
-P 6200 2700
-F 0 "J3" H 6280 2742 50  0000 L CNN
-F 1 "Conn_01x07" H 6280 2651 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal" H 6200 2700 50  0001 C CNN
-F 3 "~" H 6200 2700 50  0001 C CNN
-	1    6200 2700
-	1    0    0    -1  
-$EndComp
-Text GLabel 1800 2400 0    50   Input ~ 0
-a
-Text GLabel 1800 2500 0    50   Input ~ 0
-b
-Text GLabel 1800 2600 0    50   Input ~ 0
-c
-Text GLabel 1800 2800 0    50   Input ~ 0
-e
-Text GLabel 1800 2900 0    50   Input ~ 0
-f
-Text GLabel 1800 3000 0    50   Input ~ 0
-g
-Text GLabel 1800 2700 0    50   Input ~ 0
-d
-$Comp
-L Connector_Generic:Conn_01x07 J1
-U 1 1 60BD6BFE
-P 2000 2700
-F 0 "J1" H 2080 2742 50  0000 L CNN
-F 1 "Conn_01x07" H 2080 2651 50  0000 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x07_P2.54mm_Horizontal" H 2000 2700 50  0001 C CNN
-F 3 "~" H 2000 2700 50  0001 C CNN
-	1    2000 2700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x06 J4
-U 1 1 60BE02E8
-P 6200 3400
-F 0 "J4" H 6280 3392 50  0000 L CNN
-F 1 "Conn_01x06" H 6280 3301 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Horizontal" H 6200 3400 50  0001 C CNN
-F 3 "~" H 6200 3400 50  0001 C CNN
-	1    6200 3400
-	1    0    0    -1  
+P 6500 2750
+F 0 "J3" H 6580 2792 50  0000 L CNN
+F 1 "Conn_01x07" H 6580 2701 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal" H 6500 2750 50  0001 C CNN
+F 3 "~" H 6500 2750 50  0001 C CNN
+	1    6500 2750
+	-1   0    0    1   
 $EndComp
 $Comp
 L Jumper:SolderJumper_2_Bridged JP1
@@ -537,40 +499,17 @@ Text GLabel 4450 5150 2    50   Input ~ 0
 b4
 Text GLabel 4450 5450 2    50   Input ~ 0
 b5
-Text GLabel 6000 3200 0    50   Input ~ 0
+Text GLabel 6700 3250 2    50   Input ~ 0
 b0
-Text GLabel 6000 3300 0    50   Input ~ 0
+Text GLabel 6700 3350 2    50   Input ~ 0
 b1
-Text GLabel 6000 3400 0    50   Input ~ 0
+Text GLabel 6700 3450 2    50   Input ~ 0
 b2
-Text GLabel 6000 3500 0    50   Input ~ 0
+Text GLabel 6700 3550 2    50   Input ~ 0
 b3
-Text GLabel 6000 3600 0    50   Input ~ 0
+Text GLabel 6700 3650 2    50   Input ~ 0
 b4
-Text GLabel 6000 3700 0    50   Input ~ 0
-b5
-$Comp
-L Connector_Generic:Conn_01x06 J2
-U 1 1 60BFC8AB
-P 2000 3400
-F 0 "J2" H 2080 3392 50  0000 L CNN
-F 1 "Conn_01x06" H 2080 3301 50  0000 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Horizontal" H 2000 3400 50  0001 C CNN
-F 3 "~" H 2000 3400 50  0001 C CNN
-	1    2000 3400
-	1    0    0    -1  
-$EndComp
-Text GLabel 1800 3200 0    50   Input ~ 0
-b0
-Text GLabel 1800 3300 0    50   Input ~ 0
-b1
-Text GLabel 1800 3400 0    50   Input ~ 0
-b2
-Text GLabel 1800 3500 0    50   Input ~ 0
-b3
-Text GLabel 1800 3600 0    50   Input ~ 0
-b4
-Text GLabel 1800 3700 0    50   Input ~ 0
+Text GLabel 6700 3750 2    50   Input ~ 0
 b5
 Text Label 3150 3600 3    50   ~ 0
 com
@@ -640,4 +579,86 @@ F 3 "~" H 7950 2150 50  0001 C CNN
 	1    7950 2150
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x07 J4
+U 1 1 60B7DED8
+P 6500 3550
+F 0 "J4" H 6580 3592 50  0000 L CNN
+F 1 "Conn_01x07" H 6580 3501 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal" H 6500 3550 50  0001 C CNN
+F 3 "~" H 6500 3550 50  0001 C CNN
+	1    6500 3550
+	-1   0    0    1   
+$EndComp
+Text GLabel 6700 3850 2    50   Input ~ 0
+b6
+$Comp
+L Jumper:SolderJumper_2_Bridged JP7
+U 1 1 60B84D01
+P 4300 5750
+F 0 "JP7" H 4300 5955 50  0000 C CNN
+F 1 "SolderJumper_2_Bridged" H 4300 5864 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 4300 5750 50  0001 C CNN
+F 3 "~" H 4300 5750 50  0001 C CNN
+	1    4300 5750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3600 5450 3600 5750
+Wire Wire Line
+	3600 5750 4150 5750
+Text GLabel 4450 5750 2    50   Input ~ 0
+b6
+Text GLabel 6700 2450 2    50   Input ~ 0
+a
+Text GLabel 1950 2550 2    50   Input ~ 0
+b
+Text GLabel 1950 2650 2    50   Input ~ 0
+c
+Text GLabel 1950 2850 2    50   Input ~ 0
+e
+Text GLabel 1950 2950 2    50   Input ~ 0
+f
+Text GLabel 1950 3050 2    50   Input ~ 0
+g
+Text GLabel 1950 2750 2    50   Input ~ 0
+d
+$Comp
+L Connector_Generic:Conn_01x07 J1
+U 1 1 60BBE197
+P 1750 2750
+F 0 "J1" H 1830 2792 50  0000 L CNN
+F 1 "Conn_01x07" H 1830 2701 50  0000 L CNN
+F 2 "good_things:pin-socket-7x2.54" H 1750 2750 50  0001 C CNN
+F 3 "~" H 1750 2750 50  0001 C CNN
+	1    1750 2750
+	-1   0    0    1   
+$EndComp
+Text GLabel 1950 3250 2    50   Input ~ 0
+b0
+Text GLabel 1950 3350 2    50   Input ~ 0
+b1
+Text GLabel 1950 3450 2    50   Input ~ 0
+b2
+Text GLabel 1950 3550 2    50   Input ~ 0
+b3
+Text GLabel 1950 3650 2    50   Input ~ 0
+b4
+Text GLabel 1950 3750 2    50   Input ~ 0
+b5
+$Comp
+L Connector_Generic:Conn_01x07 J2
+U 1 1 60BBE1A3
+P 1750 3550
+F 0 "J2" H 1830 3592 50  0000 L CNN
+F 1 "Conn_01x07" H 1830 3501 50  0000 L CNN
+F 2 "good_things:pin-socket-7x2.54" H 1750 3550 50  0001 C CNN
+F 3 "~" H 1750 3550 50  0001 C CNN
+	1    1750 3550
+	-1   0    0    1   
+$EndComp
+Text GLabel 1950 3850 2    50   Input ~ 0
+b6
+Text GLabel 1950 2450 2    50   Input ~ 0
+a
 $EndSCHEMATC
