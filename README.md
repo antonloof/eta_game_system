@@ -1,5 +1,5 @@
-# tls3001
-testing to drive tls3001 leds with a pico
+# Eta game system
+Playing games on a wall of TLS3001. Driven by a raspberry pi pico
 
 ## important docs
 https://github.com/FastLED/FastLED/issues/1
