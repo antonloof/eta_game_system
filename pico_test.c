@@ -21,15 +21,20 @@
 #define DATA_HEADER_PULSE 0b1111111111111110010
 #define DATA_HEADER_PULSE_LEN 19
 
-#define PIXEL_COUNT 255
-#define DMA_COUNT (PIXEL_COUNT + 5)
-#define PIXEL_OFFSET 3
-#define SIDE_LIGHT_COUNT 15
-
-#define LED_MAX 0x3FF
-
 #define WIDTH 10
 #define HEIGHT 24
+
+#define SECONDARY_SCREEN_SIZE 16
+#define SECONDARY_SCREEN_COUNT 2
+#define SECONDARY_SCREEN_EXTRA_LIGHTS 7
+
+#define SIDE_LIGHT_COUNT 15
+#define PIXEL_COUNT (WIDTH * HEIGHT + SIDE_LIGHT_COUNT)
+#define DMA_COUNT (PIXEL_COUNT + 5 + SECONDARY_SCREEN_SIZE * SECONDARY_SCREEN_COUNT + SECONDARY_SCREEN_EXTRA_LIGHTS)
+//#define DMA_COUNT (PIXEL_COUNT + 5)
+#define PIXEL_OFFSET 3
+
+#define LED_MAX 0x3FF
 
 #define TETRIMINO_SIZE 4
 
@@ -236,6 +241,11 @@ int main()
     uint64_t last_frame = 0;
     place_tetrimino(0, 4, 0, 0xFF, 0, 0, &active_piece);
     uint button_action = 0;
+
+    for (int j = 0; j < SECONDARY_SCREEN_SIZE * SECONDARY_SCREEN_COUNT + SECONDARY_SCREEN_EXTRA_LIGHTS; j++)
+    {
+        set_rgb(PIXEL_COUNT + j, 0xff, 0xff, 0);
+    }
 
     uint i = 0;
     while (1)
