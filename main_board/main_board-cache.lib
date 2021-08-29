@@ -179,8 +179,8 @@ $FPLIST
 $ENDFPLIST
 DRAW
 P 2 0 1 0 50 0 -50 0 N
-P 4 0 1 10 50 50 50 -50 -50 0 50 50 N
-P 6 0 1 10 -75 25 -75 50 -50 50 -50 -50 -25 -50 -25 -25 N
+P 4 0 1 8 50 50 50 -50 -50 0 50 50 N
+P 6 0 1 8 -75 25 -75 50 -50 50 -50 -50 -25 -50 -25 -25 N
 X K 1 -150 0 100 R 50 50 1 1 P
 X A 2 150 0 100 L 50 50 1 1 P
 ENDDRAW
@@ -201,8 +201,8 @@ $FPLIST
 $ENDFPLIST
 DRAW
 P 2 0 1 0 30 0 -30 0 N
-P 3 0 1 10 -10 40 -30 40 -30 -40 N
-P 4 0 1 10 30 40 -30 0 30 -40 30 40 N
+P 3 0 1 0 -10 40 -30 40 -30 -40 N
+P 4 0 1 0 30 40 -30 0 30 -40 30 40 N
 X K 1 -100 0 70 R 50 50 1 1 P
 X A 2 100 0 70 L 50 50 1 1 P
 ENDDRAW
@@ -363,11 +363,46 @@ X B 2 150 0 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# MCU_RaspberryPi_and_Boards_Pico
+# Mechanical_MountingHole_Pad
 #
-DEF MCU_RaspberryPi_and_Boards_Pico U 0 40 Y Y 1 F N
+DEF Mechanical_MountingHole_Pad H 0 40 N N 1 F N
+F0 "H" 0 250 50 H V C CNN
+F1 "Mechanical_MountingHole_Pad" 0 175 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ MountingHole*Pad*
+$ENDFPLIST
+DRAW
+C 0 50 50 0 1 50 N
+X 1 1 0 -100 100 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# main_board-rescue_AP62250-good_things
+#
+DEF main_board-rescue_AP62250-good_things U 0 40 Y Y 1 F N
+F0 "U" 0 250 50 H V C CNN
+F1 "main_board-rescue_AP62250-good_things" 0 -150 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S -200 200 200 -100 0 1 0 f
+S 100 -100 100 -100 0 1 0 N
+X gnd 1 -300 -50 100 R 50 50 1 1 I
+X sw 2 300 50 100 L 50 50 1 1 P
+X vin 3 -300 150 100 R 50 50 1 1 I
+X fb 4 300 -50 100 L 50 50 1 1 I
+X en 5 -300 50 100 R 50 50 1 1 I
+X bst 6 300 150 100 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+# main_board-rescue_Pico-MCU_RaspberryPi_and_Boards
+#
+DEF main_board-rescue_Pico-MCU_RaspberryPi_and_Boards U 0 40 Y Y 1 F N
 F0 "U" -550 1100 50 H V C CNN
-F1 "MCU_RaspberryPi_and_Boards_Pico" 0 750 50 H V C CNN
+F1 "main_board-rescue_Pico-MCU_RaspberryPi_and_Boards" 0 750 50 H V C CNN
 F2 "RPi_Pico:RPi_Pico_SMD_TH" 0 0 50 V I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -416,41 +451,6 @@ X GPIO4 6 -700 450 100 R 50 50 1 1 B
 X GPIO5 7 -700 350 100 R 50 50 1 1 B
 X GND 8 -700 250 100 R 50 50 1 1 W
 X GPIO6 9 -700 150 100 R 50 50 1 1 B
-ENDDRAW
-ENDDEF
-#
-# Mechanical_MountingHole_Pad
-#
-DEF Mechanical_MountingHole_Pad H 0 40 N N 1 F N
-F0 "H" 0 250 50 H V C CNN
-F1 "Mechanical_MountingHole_Pad" 0 175 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-$FPLIST
- MountingHole*Pad*
-$ENDFPLIST
-DRAW
-C 0 50 50 0 1 50 N
-X 1 1 0 -100 100 U 50 50 1 1 I
-ENDDRAW
-ENDDEF
-#
-# good_things_AP62250
-#
-DEF good_things_AP62250 U 0 40 Y Y 1 F N
-F0 "U" 0 250 50 H V C CNN
-F1 "good_things_AP62250" 0 -150 50 H V C CNN
-F2 "" 0 0 50 H I C CNN
-F3 "" 0 0 50 H I C CNN
-DRAW
-S -200 200 200 -100 0 1 0 f
-S 100 -100 100 -100 0 1 0 N
-X gnd 1 -300 -50 100 R 50 50 1 1 I
-X sw 2 300 50 100 L 50 50 1 1 P
-X vin 3 -300 150 100 R 50 50 1 1 I
-X fb 4 300 -50 100 L 50 50 1 1 I
-X en 5 -300 50 100 R 50 50 1 1 I
-X bst 6 300 150 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
