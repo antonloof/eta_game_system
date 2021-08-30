@@ -31,3 +31,6 @@ fp-info-cache
 *.drl
 *.gbr
 *.zip
+
+**/Debug/*
+**/Release/*

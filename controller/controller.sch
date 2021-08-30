@@ -209,15 +209,10 @@ Text GLabel 2650 2550 2    50   Input ~ 0
 txled
 Text GLabel 2650 3150 2    50   Input ~ 0
 rxled
-Text GLabel 3250 2350 1    50   Input ~ 0
-3v3
-Wire Wire Line
-	3250 2350 3250 2450
 Wire Wire Line
 	3250 3050 3100 3050
 Wire Wire Line
 	3100 2450 3250 2450
-Connection ~ 3250 2450
 Wire Wire Line
 	3250 2450 3250 3050
 $Comp
@@ -1040,4 +1035,18 @@ Text Label 6800 2300 0    50   ~ 0
 rst
 NoConn ~ 7250 2500
 NoConn ~ 7250 2600
+$Comp
+L power:GND #PWR?
+U 1 1 612D53B4
+P 3250 3050
+F 0 "#PWR?" H 3250 2800 50  0001 C CNN
+F 1 "GND" H 3255 2877 50  0000 C CNN
+F 2 "" H 3250 3050 50  0001 C CNN
+F 3 "" H 3250 3050 50  0001 C CNN
+	1    3250 3050
+	1    0    0    -1  
+$EndComp
+Connection ~ 3250 3050
+Text Notes 1950 2150 0    50   ~ 0
+leds are reverse of what this symbol says!
 $EndSCHEMATC
