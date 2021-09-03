@@ -69,7 +69,7 @@ U 1 1 60F4BA7B
 P 2250 2750
 F 0 "J1" H 2250 3325 50  0000 C CNN
 F 1 "j0011d21bnl" H 2250 3416 50  0000 C CNN
-F 2 "Connector_RJ:RJ45_Cetus_J1B1211CCD_Horizontal" V 2250 2775 50  0001 C CNN
+F 2 "Connector_RJ:RJ45_BEL_SS74301-00x_Vertical" V 2250 2775 50  0001 C CNN
 F 3 "~" V 2250 2775 50  0001 C CNN
 	1    2250 2750
 	-1   0    0    1   
@@ -201,9 +201,9 @@ Wire Wire Line
 NoConn ~ 2250 2250
 Text GLabel 8450 2700 2    50   Input ~ 0
 connected
-Text GLabel 8450 2300 2    50   Input ~ 0
-rxled
 Text GLabel 8450 2400 2    50   Input ~ 0
+rxled
+Text GLabel 8450 2300 2    50   Input ~ 0
 txled
 Text GLabel 2650 2550 2    50   Input ~ 0
 txled
@@ -221,7 +221,7 @@ U 1 1 60FCCDE1
 P 5900 3300
 F 0 "U1" H 6150 3950 50  0000 C CNN
 F 1 "74HCT541" H 6100 2650 50  0000 C CNN
-F 2 "Package_SO:SSOP-20_5.3x7.2mm_P0.65mm" H 5900 3300 50  0001 C CNN
+F 2 "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm" H 5900 3300 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74HCT541" H 5900 3300 50  0001 C CNN
 	1    5900 3300
 	1    0    0    -1  
@@ -1035,18 +1035,20 @@ Text Label 6800 2300 0    50   ~ 0
 rst
 NoConn ~ 7250 2500
 NoConn ~ 7250 2600
+Text GLabel 3250 2300 1    50   Input ~ 0
+3v3
+Wire Wire Line
+	3250 2300 3250 2450
+Connection ~ 3250 2450
 $Comp
-L power:GND #PWR?
-U 1 1 612D53B4
-P 3250 3050
-F 0 "#PWR?" H 3250 2800 50  0001 C CNN
-F 1 "GND" H 3255 2877 50  0000 C CNN
-F 2 "" H 3250 3050 50  0001 C CNN
-F 3 "" H 3250 3050 50  0001 C CNN
-	1    3250 3050
+L Mechanical:MountingHole H5
+U 1 1 613711C0
+P 9300 4950
+F 0 "H5" H 9400 4996 50  0000 L CNN
+F 1 "MountingHole" H 9400 4905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 9300 4950 50  0001 C CNN
+F 3 "~" H 9300 4950 50  0001 C CNN
+	1    9300 4950
 	1    0    0    -1  
 $EndComp
-Connection ~ 3250 3050
-Text Notes 1950 2150 0    50   ~ 0
-leds are reverse of what this symbol says!
 $EndSCHEMATC
