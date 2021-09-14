@@ -3,19 +3,23 @@
 void portBInterrupt(void);
 
 int state = 0;
+unsigned char received;
 
 main()
 {
 	sfr_CLK.CKDIVR.byte = 0; // FULL SPEED
 	sfr_CLK.PCKENR.byte = 0xFF; // enable all (usart)
 
-	// PC0 and PC1 open drain for leds
+	// PC0 and PC1 push pull for leds (does not work, are OD only)
 	// PC4 should output a "high" all the time
 	// PC3 is tx and should be output, push pull, high speed
+	// PC2 is rx and should be input no interrupt
 	sfr_PORTC.DDR.byte = 0b00011011;
-	sfr_PORTC.CR1.C14 = 1;
-	sfr_PORTC.CR1.C13 = 1;
-	sfr_PORTC.CR2.C23 = 1;
+	sfr_PORTC.CR1.C10 = 1; // push pull
+	sfr_PORTC.CR1.C11 = 1; // push pull
+	sfr_PORTC.CR1.C13 = 1; // push pull
+	sfr_PORTC.CR1.C14 = 1; // push pull
+	sfr_PORTC.CR2.C23 = 1; // high speed
 	
 	// port b is all inputs all interrupts
 	sfr_PORTB.DDR.byte = 0;
@@ -37,20 +41,26 @@ main()
 	sfr_USART.BRR2.byte = 0x0B;
 	sfr_USART.BRR1.byte = 0x08;
 	
+	// sfr_USART.CR2.RIEN = 1; // enable uart rx interrupts
+	
+	sfr_USART.CR2.REN = 1; // enable rx
 	sfr_USART.CR2.TEN = 1; // enable transmitter
-	sfr_USART.DR.byte = 0b10101010; // send something
 	
 	// the controller is connected
 	sfr_PORTC.ODR.ODR4 = 1;
 	
 	ENABLE_INTERRUPTS();
-
+	sfr_USART.DR.byte = 0b10101010; // send something
 	
-	while (1);
+	while (1) {
+		while (!sfr_USART.SR.RXNE);
+		received = sfr_USART.DR.byte;
+	}
+	
 }
 
 @interrupt void portBInterrupt(void) {
 	sfr_ITC_EXTI.SR2.PBF = 1; // clear interrupt
-	sfr_PORTC.ODR.ODR0 = state;
-	state = !state;
+	while (!sfr_USART.SR.TXE);
+	sfr_USART.DR.byte = sfr_PORTC.IDR.byte;
 }
