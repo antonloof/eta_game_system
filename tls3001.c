@@ -26,6 +26,13 @@ uint dma_c;
 uint sm;
 uint pixel_count;
 
+uint get_word(uint data, uint count);
+uint init_pio(PIO pio, uint pin);
+void tls3001_init_dma();
+void tls3001_dma_irq0_handler();
+void tls3001_init_dma_buf();
+void init_double_buffers();
+
 void init_tls3001(uint pin, PIO pio, uint _pixel_count)
 {
     pixel_count = _pixel_count;
@@ -33,12 +40,12 @@ void init_tls3001(uint pin, PIO pio, uint _pixel_count)
     writing = dma_buf_2;
     should_swap_buffers = 0;
 
-    init_dma();
-    init_dma_buf(dma_buf_1);
-    init_dma_buf(dma_buf_2);
+    tls3001_init_dma();
+    tls3001_init_dma_buf(dma_buf_1);
+    tls3001_init_dma_buf(dma_buf_2);
 
     sm = init_pio(pio, pin);
-    dma_irq0_handler(); // kick it off, legooo
+    tls3001_dma_irq0_handler(); // kick it off, legooo
     init_double_buffers();
 }
 
@@ -77,7 +84,7 @@ uint init_pio(PIO pio, uint pin)
     return sm;
 }
 
-void dma_irq0_handler()
+void tls3001_dma_irq0_handler()
 {
     dma_hw->ints0 = 1u << dma_c; // clear interrupt
     if (should_swap_buffers)
@@ -91,7 +98,7 @@ void dma_irq0_handler()
     dma_channel_set_read_addr(dma_c, reading, true); // retrigger dma
 }
 
-void init_dma_buf(tls3001_pixel *target)
+void tls3001_init_dma_buf(tls3001_pixel *target)
 {
     target[0].rg = get_word(RST_PULSE, RST_PULSE_LEN);
     target[0].b = 30;
@@ -109,7 +116,7 @@ void init_dma_buf(tls3001_pixel *target)
     target[pixel_count + 1].b = 0;
 }
 
-void init_dma()
+void tls3001_init_dma()
 {
     dma_c = dma_claim_unused_channel(true);
     dma_channel_config conf = dma_channel_get_default_config(dma_c);
@@ -120,7 +127,7 @@ void init_dma()
     channel_config_set_dreq(&conf, DREQ_PIO0_TX0 + sm);
     dma_channel_set_irq0_enabled(dma_c, true);
     irq_set_enabled(DMA_IRQ_0, true);
-    irq_set_exclusive_handler(DMA_IRQ_0, dma_irq0_handler);
+    irq_add_shared_handler(DMA_IRQ_0, tls3001_dma_irq0_handler, PICO_SHARED_IRQ_HANDLER_DEFAULT_ORDER_PRIORITY);
     dma_channel_configure(dma_c, &conf, &pio0_hw->txf[sm], NULL, 2 * (pixel_count + PIXEL_OFFSET + RESET_PULSE_LEN), false);
 }
 
