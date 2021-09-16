@@ -10,20 +10,20 @@
 #include "tetris.h"
 #include "scoreboard.h"
 
+#include "hardware/adc.h"
+
 #define TLS_PIN 22
 #define TLS_PIO pio0
 
 #define SCOREBOARD_PIN 2
 #define SCOREBOARD_PIO pio1
 
-uint left_pin = 10;
-uint right_pin = 11;
-uint down_pin = 12;
-uint rotate_pin = 13;
+void init_rng();
 
 int main()
 {
     stdio_init_all();
+    init_rng();
     set_sys_clock_48mhz();
 
     init_tls3001(TLS_PIN, TLS_PIO, TOTAL_LED_COUNT);
@@ -39,4 +39,16 @@ int main()
         tetris_update();
     }
     return 0;
+}
+
+void init_rng()
+{
+    adc_init();
+    adc_select_input(4);
+    srand(adc_read());
+    // run some random numbers to make numbers less corralated to seed
+    for (int i = 0; i < 100; i++)
+    {
+        rand();
+    }
 }

@@ -37,6 +37,7 @@ target_link_libraries(pico_test
         hardware_i2c
         hardware_dma
         hardware_pio
+        hardware_adc
         )
 
 pico_add_extra_outputs(pico_test)
