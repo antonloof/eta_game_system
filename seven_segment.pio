@@ -4,4 +4,5 @@
     Dumps input (7 segments and 7 common) to 14 consecutive pins
     reads data in 16 bit increments. Should be executed quite slowly
 */
-out pins, 14
+out pins, 14 [31]
+out pins, 14 [31]

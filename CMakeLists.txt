@@ -18,7 +18,7 @@ project(pico_test C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-add_executable(pico_test pico_test.c tls3001.c matrix_with_extra.c tetris.c scoreboard.c matrices.c)
+add_executable(pico_test pico_test.c tls3001.c matrix_with_extra.c tetris.c scoreboard.c matrices.c controller.c)
 pico_generate_pio_header(pico_test ${CMAKE_CURRENT_LIST_DIR}/manchester.pio)
 pico_generate_pio_header(pico_test ${CMAKE_CURRENT_LIST_DIR}/seven_segment.pio)
 

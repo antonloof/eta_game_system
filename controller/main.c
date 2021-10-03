@@ -1,9 +1,12 @@
 #include "stm8l101f3.h" 
 
-void portBInterrupt(void);
+#define DEBUONCE_THRESH 100
 
-int state = 0;
-unsigned char received;
+unsigned char received, last_received;
+
+int count = 0;
+int has_send = 1;
+int a = 0;
 
 main()
 {
@@ -21,15 +24,11 @@ main()
 	sfr_PORTC.CR1.C14 = 1; // push pull
 	sfr_PORTC.CR2.C23 = 1; // high speed
 	
-	// port b is all inputs all interrupts
+	// port b is all inputs with pullups. 
 	sfr_PORTB.DDR.byte = 0;
-	sfr_PORTB.CR1.byte = 0;
-	sfr_PORTB.CR2.byte = 0xFF;
+	sfr_PORTB.CR1.byte = 0xFF;
+	sfr_PORTB.CR2.byte = 0;
 	
-	// interrupt on all edges pins B0-B7 calls EXTIB
-	sfr_ITC_EXTI.CR3.PBIS = 0b11;
-	sfr_ITC_EXTI.CONF.PBHIS = 1;
-	sfr_ITC_EXTI.CONF.PBLIS = 1;
 	
 	// configure usart
 	sfr_USART.CR1.USARTD = 0; // dont disable
@@ -41,26 +40,36 @@ main()
 	sfr_USART.BRR2.byte = 0x0B;
 	sfr_USART.BRR1.byte = 0x08;
 	
-	// sfr_USART.CR2.RIEN = 1; // enable uart rx interrupts
 	
 	sfr_USART.CR2.REN = 1; // enable rx
 	sfr_USART.CR2.TEN = 1; // enable transmitter
 	
 	// the controller is connected
 	sfr_PORTC.ODR.ODR4 = 1;
-	
-	ENABLE_INTERRUPTS();
-	sfr_USART.DR.byte = 0b10101010; // send something
-	
+		
 	while (1) {
-		while (!sfr_USART.SR.RXNE);
-		received = sfr_USART.DR.byte;
+		received = sfr_PORTB.IDR.byte;
+		if (received != last_received) {
+			a++;
+		}
+		
+		if (!has_send) {
+			if (received == last_received) {
+				count++;
+				if (count == DEBUONCE_THRESH) {
+					count = 0;
+					has_send = 1;
+					while (!sfr_USART.SR.TXE);
+					sfr_USART.DR.byte = received;
+				}
+			} else {
+				count = 0;
+			}
+		} else {
+			if (received != last_received) {
+				has_send = 0;
+			}
+		}
+		last_received = received;
 	}
-	
-}
-
-@interrupt void portBInterrupt(void) {
-	sfr_ITC_EXTI.SR2.PBF = 1; // clear interrupt
-	while (!sfr_USART.SR.TXE);
-	sfr_USART.DR.byte = sfr_PORTC.IDR.byte;
 }

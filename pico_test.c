@@ -11,6 +11,7 @@
 #include "scoreboard.h"
 
 #include "hardware/adc.h"
+#include "controller.h"
 
 #define TLS_PIN 22
 #define TLS_PIO pio0
@@ -19,11 +20,18 @@
 #define SCOREBOARD_PIO pio1
 
 void init_rng();
+void player_zero_action(uint8_t);
+
+uint8_t buf[10000];
+uint i = 0;
 
 int main()
 {
+    for (int j = 0; j < 10000; j++)
+        buf[j] = 0;
     stdio_init_all();
     init_rng();
+    controller_init(player_zero_action, &player0);
     set_sys_clock_48mhz();
 
     init_tls3001(TLS_PIN, TLS_PIO, TOTAL_LED_COUNT);
@@ -31,8 +39,8 @@ int main()
 
     tetris_init();
 
-    //scoreboard_init(SCOREBOARD_PIN, SCOREBOARD_PIO);
-    //scoreboard_set_score(1234567, 0);
+    scoreboard_init(SCOREBOARD_PIN, SCOREBOARD_PIO);
+    scoreboard_set_score(3126089, 0);
 
     while (1)
     {
@@ -51,4 +59,11 @@ void init_rng()
     {
         rand();
     }
+}
+
+void player_zero_action(uint8_t state)
+{
+    buf[i++] = state;
+    if (i == 10000)
+        i = 0;
 }
