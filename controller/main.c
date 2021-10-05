@@ -6,7 +6,6 @@ unsigned char received, last_received;
 
 int count = 0;
 int has_send = 1;
-int a = 0;
 
 main()
 {
@@ -40,19 +39,15 @@ main()
 	sfr_USART.BRR2.byte = 0x0B;
 	sfr_USART.BRR1.byte = 0x08;
 	
-	
-	sfr_USART.CR2.REN = 1; // enable rx
 	sfr_USART.CR2.TEN = 1; // enable transmitter
 	
 	// the controller is connected
 	sfr_PORTC.ODR.ODR4 = 1;
-		
+	
+	last_received = sfr_PORTB.IDR.byte;
 	while (1) {
 		received = sfr_PORTB.IDR.byte;
-		if (received != last_received) {
-			a++;
-		}
-		
+
 		if (!has_send) {
 			if (received == last_received) {
 				count++;
