@@ -11,19 +11,20 @@ controller player1 = {controller_callback_nop, 1, 17, 16, uart1, UART1_IRQ, cont
 
 void controller_init(controller_callback callback, controller *out)
 {
-
-    irq_set_exclusive_handler(out->irq_flag, out->irq_happened);
-    irq_set_enabled(out->irq_flag, true);
-
     uart_init(out->uart, 115200);
     uart_set_hw_flow(out->uart, false, false);
     uart_set_format(out->uart, 8, 1, UART_PARITY_NONE);
     uart_set_translate_crlf(out->uart, false);
+    uart_set_fifo_enabled(out->uart, false);
+
     out->callback = callback;
 
     gpio_set_function(out->rxpin, GPIO_FUNC_UART);
     gpio_set_function(out->txpin, GPIO_FUNC_UART);
     // rx interrupts
+
+    irq_set_exclusive_handler(out->irq_flag, out->irq_happened);
+    irq_set_enabled(out->irq_flag, true);
     uart_set_irq_enables(out->uart, true, false);
 }
 

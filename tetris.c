@@ -1,5 +1,11 @@
 #include "tetris.h"
 
+#define HOLD_BUTTON_CODE 32
+#define LEFT_BUTTON_CODE 4
+#define RIGHT_BUTTON_CODE 1
+#define DOWN_BUTTON_CODE 2
+#define ROTATE_BUTTON_CODE 64
+
 piece active_piece, next_piece, hold_piece;
 
 tetris_point board[MAIN_MATRIX_W * MAIN_MATRIX_H];
@@ -115,6 +121,8 @@ uint tetriminos[TETRIMINO_COUNT][TETRIMINO_ROTATIONS][TETRIMINO_SIZE * TETRIMINO
     },
 };
 
+uint8_t last_button_state;
+
 #define COOL_COLOR_COUNT 7
 typedef struct col
 {
@@ -140,6 +148,7 @@ uint check_pos_ok();
 uint check_scoring();
 void piece_to_secondary_display(matrix_with_extra *display, piece *p);
 void init_random_tetrimino(piece *out);
+uint check_game_over();
 
 void tetris_init()
 {
@@ -147,6 +156,8 @@ void tetris_init()
     last_frame = 0;
     speed = 500000;
     speed_up_factor = 0;
+    last_button_state = 0xFF;
+    init_board();
     init_random_tetrimino(&active_piece);
     piece_to_board();
     init_random_tetrimino(&next_piece);
@@ -155,7 +166,7 @@ void tetris_init()
     piece_to_secondary_display(&hold_piece_matrix, &hold_piece);
 }
 
-void tetris_update()
+uint tetris_update()
 {
     uint64_t time = to_us_since_boot(get_absolute_time());
     if (time - last_frame > (speed >> speed_up_factor))
@@ -188,10 +199,15 @@ void tetris_update()
             }
             active_piece = next_piece;
             init_random_tetrimino(&next_piece);
+            if (!check_pos_ok())
+            {
+                return 1;
+            }
         }
         piece_to_secondary_display(&hold_piece_matrix, &hold_piece);
         piece_to_secondary_display(&next_piece_matrix, &next_piece);
     }
+    return 0;
 }
 
 uint check_scoring()
@@ -223,7 +239,7 @@ uint check_scoring()
                 for (int x = 0; x < main_matrix.w; x++)
                 {
                     tetris_point *source_point = &board[x * main_matrix.h + yy];
-                    tetris_point *target_point = &board[x * main_matrix.h + yy + 2];
+                    tetris_point *target_point = &board[x * main_matrix.h + yy + 1];
                     target_point->has_block = source_point->has_block;
                     target_point->r = source_point->r;
                     target_point->g = source_point->g;
@@ -382,5 +398,50 @@ void init_board()
         board[i].g = 0;
         board[i].b = 0;
         board[i].has_block = 0;
+    }
+}
+
+void tetris_button_action(uint8_t state)
+{
+    uint8_t pressed_buttons = ~state & last_button_state;
+    if (pressed_buttons & DOWN_BUTTON_CODE)
+    {
+        tetris_drop_piece();
+    }
+    if (pressed_buttons & LEFT_BUTTON_CODE)
+    {
+        tetris_move_x(1);
+    }
+    if (pressed_buttons & RIGHT_BUTTON_CODE)
+    {
+        tetris_move_x(-1);
+    }
+    if (pressed_buttons & ROTATE_BUTTON_CODE)
+    {
+        tetris_rotate_piece();
+    }
+    if (pressed_buttons & HOLD_BUTTON_CODE)
+    {
+        tetris_swap_hold();
+    }
+    last_button_state = state;
+}
+
+void tetris_swap_hold()
+{
+    piece tmp = active_piece;
+    clear_piece();
+    active_piece = hold_piece;
+    piece_to_board();
+    hold_piece = tmp;
+    piece_to_secondary_display(&hold_piece_matrix, &hold_piece);
+    hold_piece.y = 0;
+}
+
+void tetris_drop_piece()
+{
+    while (!active_piece.collided)
+    {
+        update_board();
     }
 }

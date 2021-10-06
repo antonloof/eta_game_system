@@ -86,14 +86,6 @@ void scoreboard_init_pio(uint pin)
     pio_sm_set_enabled(ss.pio, ss.sm, true);
 }
 
-void scoreboard_test()
-{
-    for (uint i = 0; i < DISPLAY_COUNT; i++)
-    {
-        pio_sm_put_blocking(ss.pio, ss.sm, (1 << (SEGMENT_COUNT + i)) + 0x7F);
-    }
-}
-
 void scoreboard_dma_irq_handler()
 {
     dma_hw->ints1 = 1u << ss.dma_c; // clear interrupt

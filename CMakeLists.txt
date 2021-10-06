@@ -25,9 +25,6 @@ pico_generate_pio_header(pico_test ${CMAKE_CURRENT_LIST_DIR}/seven_segment.pio)
 pico_set_program_name(pico_test "pico_test")
 pico_set_program_version(pico_test "0.1")
 
-pico_enable_stdio_uart(pico_test 1)
-pico_enable_stdio_usb(pico_test 0)
-
 # Add the standard library to the build
 target_link_libraries(pico_test pico_stdlib)
 
@@ -38,6 +35,7 @@ target_link_libraries(pico_test
         hardware_dma
         hardware_pio
         hardware_adc
+        hardware_uart
         )
 
 pico_add_extra_outputs(pico_test)

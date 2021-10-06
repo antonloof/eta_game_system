@@ -8,4 +8,3 @@
 
 void scoreboard_init(uint start_pin, PIO pio);
 void scoreboard_set_score(uint score, uint leading_zero);
-void scoreboard_test();

@@ -25,6 +25,9 @@ typedef struct piece
 } piece;
 
 void tetris_init();
-void tetris_update();
+uint tetris_update();
 void tetris_move_x(int dx);
 void tetris_rotate_piece();
+void tetris_button_action(uint8_t state);
+void tetris_swap_hold();
+void tetris_drop_piece();

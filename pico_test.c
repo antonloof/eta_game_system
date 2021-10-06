@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
@@ -22,29 +21,25 @@
 void init_rng();
 void player_zero_action(uint8_t);
 
-uint8_t buf[10000];
-uint i = 0;
+uint game_over = 1;
 
 int main()
 {
-    for (int j = 0; j < 10000; j++)
-        buf[j] = 0;
-    stdio_init_all();
-    init_rng();
-    controller_init(player_zero_action, &player0);
     set_sys_clock_48mhz();
+
+    init_rng();
+    scoreboard_init(SCOREBOARD_PIN, SCOREBOARD_PIO);
+    controller_init(player_zero_action, &player0);
 
     init_tls3001(TLS_PIN, TLS_PIO, TOTAL_LED_COUNT);
     init_all_matrices();
 
-    tetris_init();
-
-    scoreboard_init(SCOREBOARD_PIN, SCOREBOARD_PIO);
-    scoreboard_set_score(3126089, 0);
-
     while (1)
     {
-        tetris_update();
+        while (!game_over)
+        {
+            game_over = tetris_update();
+        }
     }
     return 0;
 }
@@ -63,7 +58,14 @@ void init_rng()
 
 void player_zero_action(uint8_t state)
 {
-    buf[i++] = state;
-    if (i == 10000)
-        i = 0;
+    if (game_over)
+    {
+        game_over = 0;
+        scoreboard_set_score(0, 0);
+        tetris_init();
+    }
+    else
+    {
+        tetris_button_action(state);
+    }
 }
