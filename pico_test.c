@@ -25,8 +25,6 @@ uint game_over = 1;
 
 int main()
 {
-    set_sys_clock_48mhz();
-
     init_rng();
     scoreboard_init(SCOREBOARD_PIN, SCOREBOARD_PIO);
     controller_init(player_zero_action, &player0);
