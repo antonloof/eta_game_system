@@ -76,7 +76,7 @@ uint init_pio(PIO pio, uint pin)
     pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
     sm_config_set_out_shift(&conf, false, true, 32);
 
-    sm_config_set_clkdiv(&conf, 13); // runs comunication at 1 Mhz (ish)
+    sm_config_set_clkdiv(&conf, 10); // runs comunication at 1 Mhz (ish)
     sm_config_set_set_pins(&conf, pin, 1);
 
     pio_sm_init(pio, sm, offset, &conf);
